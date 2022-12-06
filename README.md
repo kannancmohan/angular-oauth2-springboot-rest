@@ -92,5 +92,21 @@ check the readme file
 check the readme file
 
 
+### manually accessing the endpoints of resource server(oauth2-springboot-resource-server)
+1. Generate a access token using grant_type=password
+    ```
+   curl --location --request POST 'http://localhost:8083/realms/demo1/protocol/openid-connect/token' \
+   --header 'Content-Type: application/x-www-form-urlencoded' \
+   --data-urlencode 'username=test_user1' \
+   --data-urlencode 'password=test_user1' \
+   --data-urlencode 'client_id=angular-oauth2-springboot-rest-client_id' \
+   --data-urlencode 'grant_type=password' \
+   --data-urlencode 'scope=openid read write'
+   ```
+2. call resource server endpoint using the above generated access token
+    ```
+   curl --location --request GET 'http://localhost:8081/resource-server/api/foos/1' \
+   --header 'Authorization: Bearer <above-access-token>'
+   ```
 
 
