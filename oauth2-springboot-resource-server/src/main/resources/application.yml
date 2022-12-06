@@ -13,3 +13,9 @@ spring:
         jwt:
           issuer-uri: http://localhost:8083/realms/demo1
           jwk-set-uri: http://localhost:8083/realms/demo1/protocol/openid-connect/certs
+####### enable logging for spring security
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

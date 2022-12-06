@@ -67,6 +67,24 @@ based on https://www.baeldung.com/rest-api-spring-oauth2-angular
     ```
 6. click save
 
+## create keycloak custom client scope
+1. Open the Keycloak Admin Console
+2. Click Client scopes (left-hand menu) and Click Create Client scope
+3. Fill in the form with the following values:
+    ```
+        Name: read
+        Type : optional
+        Click 'Next'
+   ```
+## configuring your client to use custom scope
+1. Open the Keycloak Admin Console
+2. Click Clients scopes (left-hand menu) and select the client you want to apply the scope
+3. In the client details page select the tab 'Client scopes'
+4. Click 'Add client scope' 
+5. Select the scope from the list . for example select the newly created 'read' scope
+6. Click add and select 'optional' 
+
+
 ### Start resource server(oauth2-springboot-resource-server)
 check the readme file
 
