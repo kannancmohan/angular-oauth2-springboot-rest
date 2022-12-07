@@ -1,10 +1,14 @@
 # angular-oauth2-springboot-rest
+Sample application demonstrating working of oauth2 authorization code Flow 
+authorization server -> standalone keycloak server
+client -> angular app
+resource server -> springboot rest application
 
-based on https://www.baeldung.com/rest-api-spring-oauth2-angular
+This sample is based on https://www.baeldung.com/rest-api-spring-oauth2-angular
 
 ## Setup keycloak server locally 
 
-### prerequisites
+### Prerequisites
 1.  java 11 or new
 
 ### Install Latest version of keycloak
@@ -20,20 +24,20 @@ based on https://www.baeldung.com/rest-api-spring-oauth2-angular
     ./kc.sh start-dev --http-port=8083 --log-level=DEBUG
     ```
 
-* Old versions: https://github.com/keycloak/keycloak/releases/download/19.0.1/keycloak-19.0.1.zip
+* for downloading old versions: https://github.com/keycloak/keycloak/releases/download/19.0.1/keycloak-19.0.1.zip
 
 ## Accessing keycloak server
 1. setup admin user by accessing http://localhost:8083
 2. Fill in the admin user password and confirmation password
 
-## create keycloak realm
+## Create keycloak realm
 1. login as admin http://localhost:8083/admin/
 2. Hover the mouse over the dropdown in the top-left corner where it says master, then click on Create realm
 3. Fill in the form with the following values:
         Realm name: demo1
 4. Click Create
 
-## create sample customer in keycloak
+## Create sample customer in keycloak
 1. Open the Keycloak Admin Console
 2. Click Users (left-hand menu) and Click Create new user
 3. Fill in the form with the following values:
@@ -49,7 +53,7 @@ based on https://www.baeldung.com/rest-api-spring-oauth2-angular
 7. Click "off" next to Temporary to prevent having to update password on first login
 8. you can login with newly created user in http://localhost:8083/realms/demo1/account/#/
 
-## create keycloak client
+## Create keycloak client
 1. Open the Keycloak Admin Console
 2. Click 'Clients' and Click 'Create client'
 3. Fill in the form with the following values:
@@ -67,7 +71,7 @@ based on https://www.baeldung.com/rest-api-spring-oauth2-angular
     ```
 6. click save
 
-## create keycloak custom client scope
+## Create keycloak custom client scope
 1. Open the Keycloak Admin Console
 2. Click Client scopes (left-hand menu) and Click Create Client scope
 3. Fill in the form with the following values:
@@ -76,7 +80,7 @@ based on https://www.baeldung.com/rest-api-spring-oauth2-angular
         Type : optional
         Click 'Next'
    ```
-## configuring your client to use custom scope
+## Configuring your client to use custom scope
 1. Open the Keycloak Admin Console
 2. Click Clients scopes (left-hand menu) and select the client you want to apply the scope
 3. In the client details page select the tab 'Client scopes'
@@ -92,7 +96,7 @@ check the readme file
 check the readme file
 
 
-### manually accessing the endpoints of resource server(oauth2-springboot-resource-server)
+### Manually accessing the endpoints of resource server(oauth2-springboot-resource-server)
 1. Generate a access token using grant_type=password
     ```
    curl --location --request POST 'http://localhost:8083/realms/demo1/protocol/openid-connect/token' \
@@ -103,10 +107,8 @@ check the readme file
    --data-urlencode 'grant_type=password' \
    --data-urlencode 'scope=openid read write'
    ```
-2. call resource server endpoint using the above generated access token
+2. call an endpoint in resource server using access token from previous step
     ```
    curl --location --request GET 'http://localhost:8081/resource-server/api/foos/1' \
-   --header 'Authorization: Bearer <above-access-token>'
+   --header 'Authorization: Bearer <use-access-token-from-previous-step>'
    ```
-
-
