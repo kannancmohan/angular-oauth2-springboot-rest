@@ -1,8 +1,8 @@
 # angular-oauth2-springboot-rest
-Sample application demonstrating working of oauth2 authorization code Flow 
-authorization server -> standalone keycloak server
-client -> angular app
-resource server -> springboot rest application
+Sample application demonstrating working of oauth2 authorization code flow 
+* authorization server -> standalone keycloak server
+* client -> angular app
+* resource server -> springboot rest application
 
 This sample is based on https://www.baeldung.com/rest-api-spring-oauth2-angular
 
