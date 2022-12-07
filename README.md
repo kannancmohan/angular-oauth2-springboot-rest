@@ -77,26 +77,54 @@ This sample is based on https://www.baeldung.com/rest-api-spring-oauth2-angular
 3. Fill in the form with the following values:
     ```
         Name: read
-        Type : optional
+        Type: optional
         Click 'Next'
    ```
 ## Configuring your client to use custom scope
 1. Open the Keycloak Admin Console
-2. Click Clients scopes (left-hand menu) and select the client you want to apply the scope
+2. Click Clients (left-hand menu) and select the client you want to apply the scope
 3. In the client details page select the tab 'Client scopes'
 4. Click 'Add client scope' 
 5. Select the scope from the list . for example select the newly created 'read' scope
 6. Click add and select 'optional' 
 
+## Accessing user's custom attribute in token
 
-### Start resource server(oauth2-springboot-resource-server)
+### Add custom attribute to user
+1. Open the Keycloak Admin Console
+2. Click 'Users' (left-hand menu) and select the user you want to add the attribute
+3. In user's details page select 'Attributes' tab
+4. Add Key and Value. eg: Key=DOB Value=1990-09-09
+5. Click save
+
+### Add a new mapping to user scope
+* we will use the existing 'read' scope we created at [Configuring your client to use custom scope](#Configuring your client to use custom scope)
+1. Open the Keycloak Admin Console
+2. Click Client scopes (left-hand menu) and select 'read' scope from the list
+3. In the Scope details page select the tab 'Mappers'
+4. Click 'configure a new mapper' and from the popup select 'User attribute'
+5. Fill in the form with the following values:
+    ```
+        Name: date_of_birth
+        User Attribute: DOB
+        Token claim name: DOB
+        Claim JSON type: String
+        Add to id token: yes/on
+        Add to access token: yes/on
+        Add to user info: yes/on
+   ```
+6. Click save
+
+Now you will get the 'DOB' in id_token and access_token when we pass the scope=read
+
+## Start resource server(oauth2-springboot-resource-server)
 check the readme file
 
-### Start angular client(oauth2-angular-client)
+## Start angular client(oauth2-angular-client)
 check the readme file
 
 
-### Manually accessing the endpoints of resource server(oauth2-springboot-resource-server)
+## Manually accessing the endpoints of resource server(oauth2-springboot-resource-server)
 1. Generate a access token using grant_type=password
     ```
    curl --location --request POST 'http://localhost:8083/realms/demo1/protocol/openid-connect/token' \
@@ -105,7 +133,7 @@ check the readme file
    --data-urlencode 'password=test_user1' \
    --data-urlencode 'client_id=angular-oauth2-springboot-rest-client_id' \
    --data-urlencode 'grant_type=password' \
-   --data-urlencode 'scope=openid read write'
+   --data-urlencode 'scope=openid read'
    ```
 2. call an endpoint in resource server using access token from previous step
     ```
